@@ -11,8 +11,9 @@ public class ExpeditionGhostShip : MonoBehaviour
     public GameObject[] EventOfExpedition;
     public GameObject Imgmap;
     public ExpeditionManager ExpeditionM;
-    public GameObject CurrenCapitain;
-    public Dropdown CapitainChoice;
+
+    public Button RhumCheckBtn;
+
 
     public void Checkevent()
     {
@@ -34,9 +35,29 @@ public class ExpeditionGhostShip : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameObject GM = GameObject.FindGameObjectWithTag("GM");
 
+        if (GM.GetComponent<GameManager>().Rhum < 100)
+        {
+            RhumCheckBtn.interactable = false;
+        }
+        else
+        {
+            RhumCheckBtn.interactable = true;
+
+        }
 
     }
+
+    public void RumCheckVoid()
+    {
+
+        GameObject GM = GameObject.FindGameObjectWithTag("GM");
+        GM.GetComponent<GameManager>().wood -= 100;
+        ExpeditionM.TimeGhostShip();
+
+    }
+
     public void ResumeGame()
     {
         Time.timeScale = 1;
