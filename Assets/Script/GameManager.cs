@@ -6,7 +6,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public const int PlaceParHouse = 5;
+    public int PlaceParHouse = 5;
     
     //Stats du joueur
     public int gold;
@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     public bool HaveAPort = false;//Check si on a un port
     public bool IsOnExpedition = false;
     public bool IsTuto = true;
+    public bool Ishappycheat = false;
+    public bool Showdevconsol = false;
     public bool Isbuyisland2 = false;
     public bool Isbuyisland3 = false;
     public int TavernNb = 0;//Nombre
@@ -64,6 +66,7 @@ public class GameManager : MonoBehaviour
     public GameObject IslandPrev;
     public GameObject WoodObj;
     public GameObject goldobj;
+    public GameObject devconsol;
     public Transform CrewSpawn;
 
     public RectTransform ScrollContent;
@@ -157,6 +160,13 @@ public class GameManager : MonoBehaviour
                 Debug.Log(hit.transform.name);
             }
         }
+        if (Input.GetKeyDown(KeyCode.F1) && Showdevconsol == false)
+        {
+            Debug.Log("USE AT YOUR OWN RISK");
+            devconsol.SetActive(true);
+            Showdevconsol = true;
+        }
+
 
         if (IsBuymod)
         {
@@ -216,15 +226,15 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            GoldTxt.color = Color.black;
+            GoldTxt.color = Color.white;
         }
-        tavernPrice = 3 * (TavernNb+1);
+        tavernPrice = (3 * (TavernNb+1));
         TavernPriceTxt.text = tavernPrice.ToString() + " Golds";
 
-        ScieriePrice = 3 * (ScierieNb + 1);
+        ScieriePrice = (3 * (ScierieNb + 1));
         ScieriePriceTxt.text = ScieriePrice.ToString() + " Golds";
 
-        HousePrice = 2 * (HouseNb + 1);
+        HousePrice = (2 * (HouseNb + 1));
         HousePriceTxt.text = HousePrice.ToString() + " Golds";
 
         if (IsOnExpedition && Time.timeScale != 1)
@@ -573,7 +583,16 @@ public class GameManager : MonoBehaviour
     }
     public void GestionMotivation()
     {
-        GlobalMotivation = 0;
+        if (!Ishappycheat)
+        {
+            GlobalMotivation = 0;
+        }
+        if (Ishappycheat)
+        {
+            GlobalMotivation = 100;
+     
+        }
+
 
         foreach (GameObject Crew in CrewList)
         {
